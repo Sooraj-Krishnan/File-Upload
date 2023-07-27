@@ -11,8 +11,25 @@ const FileUpload: React.FC = () => {
   };
 
   const handleUpload = () => {
-    // Your file upload logic here (e.g., using a backend server to save the file and generate fileId)
-    // Once fileId is generated, you can set it using setFileId()
+   
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+
+      fetch('http://localhost:5000/files/upload', {
+        method: 'POST',
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setFileId(data.fileId); // Set the fileId returned from the server
+        })
+        .catch((error) => {
+          console.error('Error while uploading:', error);
+        });
+    }
+  
+
     const randomFileId = Math.floor(Math.random() * 1000) + 1;
     setFileId(randomFileId);
   };
@@ -20,7 +37,7 @@ const FileUpload: React.FC = () => {
   return (
     <div>
       <h3>Upload File</h3>
-      <input type="file" onChange={handleFileChange} />
+      <input type="file" accept=".jpg, .jpeg, .png, .pdf, .doc, .docx" onChange={handleFileChange} />
       <button onClick={handleUpload}>Upload</button>
       {fileId && <p>File uploaded successfully. File ID: {fileId}</p>}
     </div>

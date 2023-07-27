@@ -72,8 +72,6 @@ router.get('/download/:fileId', async (req, res) => {
     res.setHeader('Content-Disposition', `attachment; filename="${file.fileName}"`);
     console.log('Content-Disposition header set.');
    
-
-    
     // Set the Content-Type header based on the file extension
     // const fileExtension = path.extname(file.fileName).toLowerCase();
     // const contentType = mimeTypes[fileExtension] || 'application/octet-stream';
