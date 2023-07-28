@@ -11,8 +11,11 @@ const fileSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  filePath: {
-    type: String,
+  // filePath: {
+  //   type: String,
+  //   required: true,
+  fileData: {
+    type: Buffer, // Binary data
     required: true,
   },
 });

@@ -17,16 +17,16 @@ const HomePage: React.FC = () => {
       })
         .then((response) => {
           if (response.ok) {
-            // Get the filename from the 'Content-Disposition' header
+            
             const contentDisposition = response.headers.get('Content-Disposition');
             console.log('Content-Disposition:', contentDisposition);
             // const match = contentDisposition && contentDisposition.match(/filename="(.+)"/);
             const match = contentDisposition && contentDisposition.match(/filename=([^;]+)/);
             console.log('Match result:', match);
-            // const fileNameFromServer = match ? match[1] : 'file'; 
-            const fileNameFromServer = match ? match[1].trim() : 'file';
+           
+            const fileNameFromServer = match ? match[1].trim().replace(/[' "]/g, '') : 'file';
             console.log('File name from server:', fileNameFromServer);
-            // Fallback to 'file' if filename not found
+            
 
             // Set the file name and trigger file download
             response.blob().then((blob) => {
