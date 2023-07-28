@@ -1,6 +1,7 @@
 // src/components/AdminPage.tsx
 import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import FileUpload from './FileUpload';
 
 const AdminPage: React.FC = () => {
@@ -33,36 +34,36 @@ const AdminPage: React.FC = () => {
         <div>
           {loggedIn ? (
             <div>
-              <h2>Admin Dashboard</h2>
-              <button onClick={handleLogout}>Logout</button>
+              <button onClick={handleLogout}
+              className="btn btn-secondary position-absolute top-0 mr-3"
+              style={{ right: 0, marginTop: '10px' }}>Logout</button>
+              <h2 className="d-flex justify-content-center align-items-center" style={{ minHeight: '10vh' }}>Welcome Admin </h2>
               <FileUpload />
             </div>
           ) : (
             <div>
-              <h2>Login</h2>
+              <h3 className="mr-2">Please Login to upload files </h3>
               <button onClick={() => setShowLoginModal(true)}>Login</button>
             </div>
           )}
     
           {/* Login Modal */}
           <Modal show={showLoginModal} onHide={() => setShowLoginModal(false)}>
-            <Modal.Header closeButton>
-              <Modal.Title>Login</Modal.Title>
-            </Modal.Header>
+          
             <Modal.Body>
-              <Form>
-                <Form.Group controlId="formBasicEmail">
+              <Form className="d-flex justify-content-center flex-column">
+                <Form.Group controlId="formBasicEmail" style={{ marginBottom: '1rem' }}>
                   <Form.Label>Email address</Form.Label>
                   <Form.Control
                     type="email"
                     placeholder="admin@example.com"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)} 
                   />
                   <Form.Text className="text-muted">Enter your email here</Form.Text>
                 </Form.Group>
     
-                <Form.Group controlId="formBasicPassword">
+                <Form.Group controlId="formBasicPassword" style={{ marginBottom: '1rem' }}>
                   <Form.Label>Password</Form.Label>
                   <Form.Control
                     type="password"
@@ -74,6 +75,7 @@ const AdminPage: React.FC = () => {
                 </Form.Group>
               </Form>
             </Modal.Body>
+
             <Modal.Footer>
               <Button variant="secondary" onClick={() => setShowLoginModal(false)}>
                 Close

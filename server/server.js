@@ -12,7 +12,6 @@ app.use(express.json());
 
 const DATABASE_URL = process.env.DATABASE_URL;
 
-// Connect to MongoDB (Make sure your MongoDB server is running)
 mongoose
   .connect(DATABASE_URL, {
     useNewUrlParser: true,

@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
+import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/ToastContainer';
 
 const HomePage: React.FC = () => {
   const [fileId, setFileId] = useState<number | null>(null);
  //  const [fileName, setFileName] = useState<string | null>(null); // State to hold the file name
+
+ const [showSuccessToast, setShowSuccessToast] = useState(false);
+ const [showErrorToast, setShowErrorToast] = useState(false);
 
   const handleFileIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const id = Number(event.target.value) || null;
@@ -37,23 +42,46 @@ const HomePage: React.FC = () => {
               document.body.appendChild(a);
               a.click();
               a.remove();
+              setShowSuccessToast(true); // Show the toast when download is successful
             });
           } else {
             // Handle error
             console.error('File download failed.');
+            setShowErrorToast(true);
           }
         })
         .catch((error) => {
           console.error('Error while fetching:', error);
         });
     }
-  };
+};
+               const handleCloseSuccessToast = () => {
+              setShowSuccessToast(false);
+               };
 
+               const handleCloseErrorToast = () => {
+               setShowErrorToast(false);
+              };
+       
   return (
     <div>
       <h2>Home Page</h2>
-      <input type="text" placeholder="Enter File ID" onChange={handleFileIdChange} />
-      <button onClick={handleDownload}>Download</button>
+      
+        <input type="text" placeholder="Enter File ID" onChange={handleFileIdChange} />
+        <button onClick={handleDownload}>Download</button>
+
+        <ToastContainer className="p-3 d-flex justify-content-center">
+        { /* Success Toast */}
+        <Toast show={showSuccessToast} onClose={handleCloseSuccessToast} bg="success" delay={3000} autohide>
+          <Toast.Body>File download successful!</Toast.Body>
+        </Toast>
+
+        {/* Error Toast */}
+        <Toast show={showErrorToast} onClose={handleCloseErrorToast} bg="danger" delay={3000} autohide>
+          <Toast.Body>File download failed!</Toast.Body>
+        </Toast>
+      </ToastContainer>
+     
     </div>
   );
 };
